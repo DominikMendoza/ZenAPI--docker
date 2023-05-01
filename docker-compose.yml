@@ -1,0 +1,38 @@
+﻿version: '3.4'
+
+networks:
+    innovamind:
+services:
+  innovamind.db:
+    container_name: innovamind.db
+    image: mysql:8.0.33
+    ports:
+      - "7275:443"
+      - "5283:80"
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: innovamind
+        MYSQL_USER: innovamind
+        MYSQL_PASSWORD: innovamind
+    networks:
+        - innovamind
+      
+  innovamind.api:
+    container_name: innovamind.api
+    image: innovamind.api
+    build:
+      context: .
+      dockerfile: InnovaMind.API/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+        - innovamind.db
+    environment:
+      - DB_HOST=innovamind.db
+      - DB_NAME=innovamind
+      - DB_USER=root
+      - DB_PASSWORD=root
+    restart: on-failure
+    networks:
+        - innovamind
