@@ -4,7 +4,7 @@ Solo sigue los pasos, luego de clonar uwu
 
     cd InnovaMind.API2
 
-    docker compose up
+    docker compose up -d
 Checa en tu navegador
 
     http://localhost/swagger/index.html
